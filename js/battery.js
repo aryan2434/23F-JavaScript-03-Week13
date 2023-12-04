@@ -6,7 +6,7 @@ const chargeStatus = document.querySelector('#battery dd:nth-of-type(1)');
 const chargeLevel = document.querySelector('#battery dd:nth-of-type(2) output');
 // STEP 1c: Grab the <progress> element inside the second <dd> element for a more graphical representation of the battery's state of charge (SOC)
 const chargeMeter = document.querySelector('#battery dd:nth-of-type(2) progress');
-
+const robohashImage = document.createElement('img');
 /* Functions
 -------------------------------------------------- */
 // STEP 3a: Create the updateBatteryStatus() function
@@ -21,6 +21,9 @@ function updateBatteryStatus(battery) {
     // STEP 3c: Update the charge level
     chargeLevel.textContent = (battery.level * 100) + "%";
     chargeMeter.value = battery.level * 100;
+
+    const robohashURL = `https://robohash.org/${battery.level}.png`;
+    robohashImage.src = robohashURL;
 }
 
 
@@ -40,6 +43,7 @@ navigator.getBattery().then(battery => {
     battery.addEventListener("levelchange", () => {
         updateBatteryStatus(battery);
     });
+    document.body.appendChild(robohashImage);
 })
 
 
